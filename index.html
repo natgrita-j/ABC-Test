@@ -57,7 +57,7 @@
         .rank-item { display: flex; align-items: center; gap: 15px; padding: 15px; border: 1.5px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
         .rank-item.selected { border-color: var(--teal); background: var(--teal-light); }
         .rank-badge { width: 30px; height: 30px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
-        .rank-item.selected .rank-badge { background: var(--teal); color: #fff; }
+        .rank-item.selected .rank-badge { background: var(--teal); color: #fff; border-color: var(--teal); }
 
         .btn-nav { width: 100%; padding: 16px; border: none; border-radius: var(--radius); font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; }
         .btn-primary { background: var(--primary); color: #fff; }
@@ -68,7 +68,7 @@
         .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
         .comp-card { background: #fff; padding: 15px; border-radius: 10px; border: 1px solid var(--border); }
         .comp-card h4 { font-size: 13px; margin-bottom: 8px; color: var(--text-secondary); }
-        .career-chip { display: inline-block; background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 20px; font-size: 12px; margin: 2px; }
+        .career-chip { display: inline-block; background: var(--primary-light); color: var(--primary-dark); padding: 4px 10px; border-radius: 20px; font-size: 11px; margin: 2px; }
 
         .nav-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
         .btn-back { background: none; border: none; color: var(--text-secondary); cursor: pointer; text-decoration: underline; }
@@ -79,7 +79,7 @@
 <div class="header">
     <div style="display:flex; justify-content:space-between; align-items:center;">
         <span style="font-weight:700; color:var(--primary);">Vocational Readiness</span>
-        <span id="step-label" style="font-size:12px; color:var(--text-secondary);">เริ่มต้นแบบทดสอบ...</span>
+        <span id="step-label" style="font-size:12px; color:var(--text-secondary);">เตรียมตัวให้พร้อม...</span>
     </div>
     <div class="progress-container"><div id="main-progress" class="progress-bar"></div></div>
 </div>
@@ -89,8 +89,8 @@
     <div class="screen active" id="screen-intro">
         <div class="card" style="text-align:center;">
             <h1>แบบทดสอบความพร้อมทางอาชีพ</h1>
-            <p style="color:var(--text-secondary); margin: 20px 0;">วิเคราะห์ความสนใจ สไตล์การทำงาน และความมั่นใจของคุณ</p>
-            <button class="btn-nav btn-primary" onclick="startFlow('A')">เริ่มส่วนที่ ก: ความสนใจ →</button>
+            <p style="color:var(--text-secondary); margin: 20px 0;">วิเคราะห์ความสนใจ สไตล์การทำงาน และความมั่นใจของคุณแบบบูรณาการ</p>
+            <button class="btn-nav btn-primary" onclick="changeScreen('A')">เริ่มส่วนที่ ก: ความสนใจ →</button>
         </div>
     </div>
 
@@ -124,12 +124,12 @@
     <div class="screen" id="screen-summary1">
         <div class="card" style="text-align:center;">
             <h2 style="color:var(--primary);">ผลลัพธ์รอบแรก: ความสนใจ</h2>
-            <div style="margin:20px 0;"><canvas id="chartA"></canvas></div>
+            <div style="margin:20px 0; min-height: 250px;"><canvas id="chartA"></canvas></div>
             <div id="summary1-desc" class="analysis-box"></div>
             <hr style="margin:20px 0; border:0; border-top:1px solid var(--border);">
             <h3>ต่อไป: วัดความมั่นใจ (Test C)</h3>
-            <p style="font-size:13px; margin:10px 0;">เพื่อค้นหาว่าอาชีพที่คุณชอบ คุณมั่นใจว่าจะทำได้ดีเพียงใด</p>
-            <button class="btn-nav btn-purple" onclick="startFlow('C')">เริ่มส่วนที่ ค: ความมั่นใจ →</button>
+            <p style="font-size:13px; margin:10px 0;">เห็นอาชีพที่ชอบแล้ว มาลองวัดดูว่าคุณ "ทำได้ดี" แค่ไหน</p>
+            <button class="btn-nav btn-purple" onclick="changeScreen('C')">เริ่มส่วนที่ ค: ความมั่นใจ →</button>
         </div>
     </div>
 
@@ -152,17 +152,17 @@
     <div class="screen" id="screen-final">
         <div class="card">
             <h2 style="text-align:center; margin-bottom:20px;">บทสรุปศักยภาพทางอาชีพ</h2>
-            <div style="margin-bottom:20px;"><canvas id="finalComparisonChart"></canvas></div>
+            <div style="margin-bottom:20px; min-height: 250px;"><canvas id="finalComparisonChart"></canvas></div>
             
             <div id="gap-analysis-box" class="analysis-box" style="border-left: 5px solid var(--purple);"></div>
 
             <div class="comparison-grid">
                 <div class="comp-card">
-                    <h4>อาชีพที่ใฝ่ฝัน (Interest + Style)</h4>
+                    <h4>อาชีพที่คุณใฝ่ฝัน (Interest + Style)</h4>
                     <div id="list-dream"></div>
                 </div>
                 <div class="comp-card">
-                    <h4>อาชีพที่ทำได้จริง (Competence + Style)</h4>
+                    <h4>อาชีพที่คุณทำได้จริง (Competence + Style)</h4>
                     <div id="list-capable"></div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
 </div>
 
 <script>
-// --- Data 100% Verbatim ---
+// --- Data ---
 const CAREERS = [
     {id:1,text:"ออกแบบตกแต่งภายใน",g:"A"}, {id:2,text:"สำรวจทางวิทยาศาสตร์ในมหาวิทยาลัยหรือศูนย์วิจัย",g:"I"},
     {id:3,text:"บริการในโรงแรม งานประชาสัมพันธ์ งานแผนกต้อนรับ",g:"S"}, {id:4,text:"จัดทำบันทึกหรือจัดเก็บเอกสารโดยใช้คอมพิวเตอร์",g:"C"},
@@ -189,8 +189,230 @@ const CAREERS = [
     {id:21,text:"อธิบาลเด็กในโรงเรียนอนุบาล",g:"S"}, {id:22,text:"เจ้าหน้าที่ดูแลการเงิน",g:"C"},
     {id:23,text:"นำเข้าสินค้าจากต่างประเทศ (สินค้าใหม่หรือหายาก)",g:"E"}, {id:24,text:"จัดทำฉากรายการโทรทัศน์และภาพยนตร์",g:"A"},
     {id:25,text:"ขับรถยกหรือรถตักดินในสถานที่ก่อสร้าง",g:"R"}, {id:26,text:"สำรวจทางกายภาพและชีวภาพทางทะเล",g:"I"},
-    {id:27,text:"ดูแลคนชราตามบ้าน",g:"S"}, {id:28,text:"ตัวแทนเอกสารราชการ",g:"C"},
+    {id:27,text:"ดูแลคนชราตามบ้าน",g:"S"}, {id:28,text:"เป็นตัวแทนหรือนายหน้าในการจัดเตรียมเอกสาร",g:"C"},
     {id:29,text:"เป็นผู้บริหารกิจการเปิดใหม่",g:"E"}, {id:30,text:"ครูสอนนักแสดง",g:"A"},
     {id:31,text:"บริการด้านขนส่งสิ่งของ",g:"R"}, {id:32,text:"สำรวจและทดลองเพื่อตรวจหาเชื้อโรค",g:"I"},
     {id:33,text:"ขายของเบ็ดเตล็ด",g:"E"}, {id:34,text:"ป้อนข้อมูลต่าง ๆ เก็บไว้ในคอมพิวเตอร์",g:"C"},
-    {id:35,text:"เขียนคอลัมน์ในหน้าหนังสือพิมพ์",g:"A"}, {id:
+    {id:35,text:"เขียนคอลัมน์ในหน้าหนังสือพิมพ์",g:"A"}, {id:36,text:"เรียบเรียงและประพันธ์เพลง",g:"A"},
+    {id:37,text:"รับตั้งและตรวจซ่อมเบรกและเครื่องยนต์",g:"R"}, {id:38,text:"พัฒนาตัวยาใหม่ ๆ",g:"I"},
+    {id:39,text:"รักษาทางการแพทย์แก่คนไข้",g:"I"}, {id:40,text:"การคิดคำนวณที่สลับซับซ้อนโดยใช้คอมพิวเตอร์",g:"C"},
+    {id:41,text:"บริหารงานในบริษัท",g:"E"}, {id:42,text:"รับจ้างเล่นเปียโน",g:"A"},
+    {id:43,text:"ประกอบชิ้นส่วนเครื่องจักร",g:"R"}, {id:44,text:"บำรุงรักษาสิ่งของพื้นบ้านประวัติศาสตร์",g:"I"},
+    {id:45,text:"วัดปรอท-ความดันเลือด อภิบาลคนไข้ในโรงพยาบาล",g:"S"}, {id:46,text:"ถ่ายเอกสารและรับโทรศัพท์จากภายนอก",g:"C"},
+    {id:47,text:"วางแผนการสต๊อคสินค้าและวางแผนการขาย",g:"E"}, {id:48,text:"ออกแบบและตกแต่งเสื้อผ้า",g:"A"},
+    {id:49,text:"ทำประมง",g:"R"}, {id:50,text:"คิดหาวิธีการใหม่และทดสอบความคิดนั้น",g:"I"},
+    {id:51,text:"บริการผู้โดยสารบนเครื่องบิน",g:"S"}, {id:52,text:"ตรวจสอบ (นับ) เงินเดือนคนงาน",g:"C"},
+    {id:53,text:"เก็บสต๊อคสินค้าและคิดวางแผนงานขาย",g:"E"}, {id:54,text:"วาดภาพประกอบเรื่องในแม็กกาซีน",g:"A"}
+];
+
+const QUESTIONS_B = [
+    {t:"ถ้าคุณเล่นเกมส์ คุณเลือกเล่นเกมส์แบบไหน",o:[{l:"ก — เกมส์ที่ต้องใช้ความคิดพิจารณาอย่างรอบคอบ",tp:"D"},{l:"ข — เกมส์ที่ให้ความเพลิดเพลินกับเพื่อนฝูง",tp:"P"},{l:"ค — เกมส์ที่ให้คะแนนสูง",tp:"T"}]},
+    {t:"หากคุณกำลังเตรียมจัดละครสักเรื่องหนึ่ง หน้าที่ใดที่คุณต้องการทำ",o:[{l:"ก — เป็นผู้เขียนละคร",tp:"D"},{l:"ข — เป็นผู้แสดงบนเวที",tp:"P"},{l:"ค — จัดเตรียมฉากและอุปกรณ์",tp:"T"}]},
+    {t:"คุณคิดว่าคุณชื่นชอบดนตรีในลักษณะใด",o:[{l:"ก — ฟังเพลง",tp:"D"},{l:"ข — ร้องเพลงกับเพื่อนและเล่นเปียโน",tp:"P"},{l:"ค — ฝึกเล่นเปียโนด้วยตนเอง",tp:"T"}]},
+    {t:"ถ้าคุณมีการบ้าน คุณจะตอบคำถามอย่างไร",o:[{l:"ก — ใช้หนังสืออ้างอิง",tp:"D"},{l:"ข — สอบถามเพื่อน",tp:"P"},{l:"ค — หาคำตอบด้วยตนเอง",tp:"T"}]},
+    {t:"คุณชอบอ่านหนังสือประเภทใด",o:[{l:"ก — เรื่องจินตนาการเกี่ยวกับอวกาศ",tp:"D"},{l:"ข — นิยายรัก",tp:"P"},{l:"ค — หนังสือวิชาการ",tp:"T"}]},
+    {t:"กิจกรรมใดที่คุณคิดว่าสำคัญในการดำรงตำแหน่งผู้จัดการสโมสร",o:[{l:"ก — จดบันทึกสถิติอย่างละเอียด",tp:"D"},{l:"ข — ดูแลทุกข์สุขของสมาชิก",tp:"P"},{l:"ค — ตรวจสอบอุปกรณ์และซ่อมแซม",tp:"T"}]},
+    {t:"วิธีหาข้อมูลในการเลือกซื้อวิทยุสักเครื่อง",o:[{l:"ก — หาข้อมูลจากหนังสือแนะนำ",tp:"D"},{l:"ข — ถามจากเพื่อนฝูง",tp:"P"},{l:"ค — ทดสอบเสียงจากร้านโดยตรง",tp:"T"}]},
+    {t:"การศึกษาลักษณะใดที่คุณชอบ",o:[{l:"ก — การศึกษาวิธีแก้ปัญหาโดยใช้ตำรา",tp:"D"},{l:"ข — การศึกษาหารือระหว่างเพื่อนฝูง",tp:"P"},{l:"ค — การศึกษาจากการฝึกฝนและทดลอง",tp:"T"}]},
+    {t:"หากได้เป็นผู้จัดการทีมเบสบอล งานอะไรคือหลัก",o:[{l:"ก — เก็บข้อมูลเกี่ยวกับผู้เล่นแต่ละคน",tp:"D"},{l:"ข — เอาใจใส่ต่อการเล่นเป็นทีม",tp:"P"},{l:"ค — ปรับปรุงอุปกรณ์ฝึกซ้อม",tp:"T"}]},
+    {t:"หากได้รับบาดเจ็บ คุณต้องการอะไรเป็นสิ่งชดเชย",o:[{l:"ก — หนังสืออ่านเล่น",tp:"D"},{l:"ข — จดหมายแสดงความเสียใจ",tp:"P"},{l:"ค — เครื่องเล่นเกมส์",tp:"T"}]},
+    {t:"ถ้าคุณเปิดร้านขายของ คุณมีแผนการขายอย่างไร",o:[{l:"ก — ตั้งราคาอย่างระมัดระวัง",tp:"D"},{l:"ข — ขายสินค้าที่ละชนิด",tp:"P"},{l:"ค — ผลิตสินค้าที่ขายดี",tp:"T"}]},
+    {t:"อาสาสมัครดูแลคนชรา คุณอยากทำอะไร",o:[{l:"ก — คิดกิจกรรมบันเทิงสำหรับคนชรา",tp:"D"},{l:"ข — พูดคุยกับคนชรา",tp:"P"},{l:"ค — ทำความสะอาดที่พัก",tp:"T"}]},
+    {t:"หากเป็นผู้นำศูนย์ในชั้นเรียน อยากทำศูนย์อะไร",o:[{l:"ก — ศูนย์บริการด้านห้องสมุด",tp:"D"},{l:"ข — ศูนย์บริการสุขภาพ",tp:"P"},{l:"ค — ศูนย์บริการเสริมความงาม",tp:"T"}]},
+    {t:"หากต้องไปท่องเที่ยว สิ่งแรกที่คุณดำเนินการคือ",o:[{l:"ก — ติดต่อสอบถามคนที่รู้จักสถานที่",tp:"D"},{l:"ข — ชักชวนใครบางคนไปกับคุณ",tp:"P"},{l:"ค — มองหาสถานที่จากแผนที่",tp:"T"}]},
+    {t:"คุณประสงค์จะอ่านประวัติของบุคคลที่มีชื่อเสียงด้านใด",o:[{l:"ก — ด้านรัฐศาสตร์",tp:"D"},{l:"ข — ด้านปรัชญา",tp:"P"},{l:"ค — ด้านวิทยาศาสตร์",tp:"T"}]},
+    {t:"ถ้าเก่งสนทนาภาษาอังกฤษ คุณอยากได้งานแบบไหน",o:[{l:"ก — ผู้สื่อข่าว",tp:"D"},{l:"ข — มัคคุเทศก์",tp:"P"},{l:"ค — ผู้แปล",tp:"T"}]},
+    {t:"จะถือร่มออกจากบ้านไหม คุณดูข้อมูลจากไหน",o:[{l:"ก — กรมอุตุนิยมวิทยา",tp:"D"},{l:"ข — คนรอบข้างแนะนำ",tp:"P"},{l:"ค — ตัดสินใจด้วยตัวเอง",tp:"T"}]},
+    {t:"งานอดิเรกหลังอายุ 50 ปี",o:[{l:"ก — วาดรูปและเล่นดนตรี",tp:"D"},{l:"ข — เล่นกีฬากับเพื่อนฝูง",tp:"P"},{l:"ค — ดูแลดอกไม้และสวน",tp:"T"}]}
+];
+
+const CAREER_MAPPING = {
+    "R+D": ["วิศวกรวิเคราะห์ภาคสนาม", "นักพัฒนายานอวกาศ", "นักสำรวจมลพิษ"],
+    "R+P": ["ผู้นำทีมขนส่ง", "คนขับเครื่องจักรงานทีม", "เจ้าของกิจการประมง"],
+    "R+T": ["ช่างซ่อมเครื่องยนต์", "ช่างประกอบเครื่องจักร", "เกษตรกร/คนเลี้ยงสัตว์"],
+    "I+D": ["นักวิจัยวิทยาศาสตร์", "นักวิจัยการเกษตร", "นักวิเคราะห์ยา"],
+    "I+P": ["แพทย์", "ที่ปรึกษาด้านสุขภาพ"],
+    "I+T": ["นักวิทย์ห้องแล็บ", "นักตรวจวัดมลพิษเทคนิค"],
+    "S+D": ["นักพัฒนาทรัพยากรมนุษย์", "ผู้วางแผนดูแลผู้สูงอายุ"],
+    "S+P": ["ครู/วิทยากร", "พนักงานต้อนรับ/บริการ", "พิธีกร"],
+    "S+T": ["พยาบาลปฏิบัติการ", "ช่างเสริมสวย"],
+    "C+D": ["นักบัญชี", "นักตรวจสอบงบประมาณ", "ธุรการข้อมูล"],
+    "C+P": ["ผู้ประสานงานหน่วยงาน", "เจ้าหน้าที่การเงินลูกค้า"],
+    "C+T": ["เจ้าหน้าที่ไอทีสนับสนุน", "เจ้าหน้าที่บันทึกข้อมูล"],
+    "E+D": ["นักวางแผนกลยุทธ์", "ธุรกิจนำเข้า-ส่งออก", "นักวิเคราะห์ธุรกิจ"],
+    "E+P": ["ผู้บริหารองค์กร", "นักขายอสังหาฯ", "เจ้าของธุรกิจ"],
+    "E+T": ["ผู้จัดการสต็อกสินค้า"],
+    "A+D": ["นักเขียน/คอลัมนิสต์", "นักแต่งเพลง"],
+    "A+P": ["นักแสดง", "พิธีกรสายบันเทิง", "ครูสอนการแสดง"],
+    "A+T": ["ดีไซน์เนอร์เสื้อผ้า", "มัณฑนากร", "จิตรกร/นักจัดฉาก"]
+};
+
+// --- State & App Logic ---
+let answersA = new Array(54).fill(null);
+let answersB = new Array(18).fill(null).map(() => []);
+let answersC = new Array(54).fill(null);
+let curA = 0, curB = 0, curC = 0;
+
+// แก้ไขชื่อฟังก์ชันและ Logic การเปลี่ยนหน้า
+function changeScreen(step) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('screen-' + step);
+    if(target) {
+        target.classList.add('active');
+        window.scrollTo(0,0);
+        if(step === 'A') renderA();
+        if(step === 'B') renderB();
+        if(step === 'C') { curC = 0; renderC(); }
+    }
+}
+
+function updateProg(pct, label) {
+    document.getElementById('main-progress').style.width = pct + '%';
+    document.getElementById('step-label').innerText = label;
+}
+
+// Section A
+function renderA() {
+    const q = CAREERS[curA];
+    document.getElementById('q-text-A').innerText = q.text;
+    document.getElementById('q-count-A').innerText = `ข้อที่ ${curA+1}/54`;
+    updateProg((curA/126)*100, `ความสนใจ: ${curA+1}/54`);
+    document.querySelectorAll('#screen-A .ans-btn').forEach(b => b.classList.remove('active-0', 'active-1', 'active-2'));
+    if(answersA[curA] !== null) {
+        const activeBtn = document.getElementById('btnA-' + answersA[curA]);
+        if(activeBtn) activeBtn.classList.add('active-' + answersA[curA]);
+    }
+}
+
+function selectA(v) {
+    answersA[curA] = v;
+    renderA();
+    setTimeout(() => { 
+        if(curA < 53) { curA++; renderA(); } 
+        else { changeScreen('B'); } 
+    }, 150);
+}
+
+function navA(d) { if(curA+d >= 0) { curA += d; renderA(); } }
+
+// Section B
+function renderB() {
+    const q = QUESTIONS_B[curB];
+    document.getElementById('q-text-B').innerText = q.t;
+    document.getElementById('q-count-B').innerText = `ข้อที่ ${curB+1}/18`;
+    updateProg(((54+curB)/126)*100, `สไตล์งาน: ${curB+1}/18`);
+    const cont = document.getElementById('rank-options-B');
+    cont.innerHTML = '';
+    const curRanks = answersB[curB];
+    q.o.forEach((opt, idx) => {
+        const rIdx = curRanks.indexOf(idx);
+        const div = document.createElement('div');
+        div.className = 'rank-item' + (rIdx !== -1 ? ' selected' : '');
+        div.innerHTML = `<div class="rank-badge">${rIdx !== -1 ? rIdx+1 : ''}</div><div>${opt.l}</div>`;
+        div.onclick = () => {
+            if(rIdx !== -1) { curRanks.splice(rIdx, 1); }
+            else if(curRanks.length < 3) { curRanks.push(idx); }
+            renderB();
+        };
+        cont.appendChild(div);
+    });
+    document.getElementById('btn-next-B').style.display = curRanks.length === 3 ? 'block' : 'none';
+}
+
+function nextB() { 
+    if(curB < 17) { curB++; renderB(); } 
+    else { showSummary1(); } 
+}
+
+// Summary 1
+function showSummary1() {
+    changeScreen('summary1');
+    const riasec = calcScore(answersA);
+    const dpt = calcDPT();
+    const topR = getTop(riasec);
+    const topD = getTop(dpt);
+    document.getElementById('summary1-desc').innerHTML = `ความสนใจหลักของคุณคือกลุ่ม <b>${topR}</b> และถนัดสไตล์งานแบบ <b>${topD}</b>`;
+    
+    new Chart(document.getElementById('chartA'), {
+        type: 'radar',
+        data: {
+            labels: Object.keys(riasec),
+            datasets: [{ label: 'ระดับความสนใจ', data: Object.values(riasec), borderColor: '#0EA5E9', backgroundColor: 'rgba(14,165,233,0.1)' }]
+        },
+        options: { responsive: true, scales: { r: { min: 0, max: 18 } } }
+    });
+}
+
+// Section C
+function renderC() {
+    const q = CAREERS[curC];
+    document.getElementById('q-text-C').innerText = q.text;
+    document.getElementById('q-count-C').innerText = `ข้อที่ ${curC+1}/54`;
+    updateProg(((72+curC)/126)*100, `ความมั่นใจ: ${curC+1}/54`);
+    document.querySelectorAll('#screen-C .ans-btn').forEach(b => b.classList.remove('active-0', 'active-1', 'active-2'));
+    if(answersC[curC] !== null) {
+        const activeBtn = document.getElementById('btnC-' + answersC[curC]);
+        if(activeBtn) activeBtn.classList.add('active-' + answersC[curC]);
+    }
+}
+
+function selectC(v) {
+    answersC[curC] = v;
+    renderC();
+    setTimeout(() => { 
+        if(curC < 53) { curC++; renderC(); } 
+        else { showFinal(); } 
+    }, 150);
+}
+
+function navC(d) { if(curC+d >= 0) { curC += d; renderC(); } }
+
+// Final Summary
+function showFinal() {
+    changeScreen('final');
+    const scoreA = calcScore(answersA);
+    const scoreC = calcScore(answersC);
+    const dpt = calcDPT();
+    const topStyle = getTop(dpt);
+
+    const topA = getTop(scoreA);
+    const topC = getTop(scoreC);
+    
+    let gapTxt = "";
+    if(topA === topC) gapTxt = `<b>Zone of Success:</b> ความชอบและความมั่นใจของคุณตรงกันในกลุ่ม <b>${topA}</b> เป็นเส้นทางที่เหมาะสมที่สุด`;
+    else gapTxt = `<b>Gap Analysis:</b> คุณสนใจกลุ่ม <b>${topA}</b> แต่มีความมั่นใจในกลุ่ม <b>${topC}</b> มากกว่า ลองหาจุดกึ่งกลางหรือพัฒนาทักษะเพิ่มเติมในสิ่งที่คุณรัก`;
+    
+    document.getElementById('gap-analysis-box').innerHTML = gapTxt;
+    document.getElementById('list-dream').innerHTML = (CAREER_MAPPING[topA+'+'+topStyle] || []).map(c => `<span class="career-chip">${c}</span>`).join('');
+    document.getElementById('list-capable').innerHTML = (CAREER_MAPPING[topC+'+'+topStyle] || []).map(c => `<span class="career-chip">${c}</span>`).join('');
+
+    new Chart(document.getElementById('finalComparisonChart'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(scoreA),
+            datasets: [
+                { label: 'ความชอบ (A)', data: Object.values(scoreA), backgroundColor: '#0EA5E9' },
+                { label: 'ความมั่นใจ (C)', data: Object.values(scoreC), backgroundColor: '#8B5CF6' }
+            ]
+        },
+        options: { responsive: true, scales: { y: { min: 0, max: 18 } } }
+    });
+}
+
+// Helpers
+function calcScore(arr) {
+    let s = {R:0,I:0,S:0,C:0,E:0,A:0};
+    CAREERS.forEach((c, i) => { if(arr[i]!==null) s[c.g] += arr[i]; });
+    return s;
+}
+function calcDPT() {
+    let s = {D:0,P:0,T:0};
+    answersB.forEach((ranks, qi) => {
+        ranks.forEach((oi, pos) => { s[QUESTIONS_B[qi].o[oi].tp] += (2-pos); });
+    });
+    return s;
+}
+function getTop(obj) { return Object.entries(obj).sort((a,b)=>b[1]-a[1])[0][0]; }
+</script>
+</body>
+</html>
